@@ -7,32 +7,38 @@ import axios from 'axios';
 const Create = () => {
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
-    const [checkbox, setCheckbox] = useState(false);
-
+    const [checkbox, setCheckbox] = useState(true);
 
     const postData = () => {
         axios.post(`https://63e1a3829088775e1cf5642f.mockapi.io/usuarios`, {
             firstName,
             lastName,
             checkbox
-        })
+        }).then(
+            setFirstName(''),
+            setLastName(''),
+            setCheckbox(false)
+        )
+        console.log(checkbox);
     }
     // console.log(firstName)
-
     return (
-        <Form className="create-form">
+        <Form className="create-form"  onSubmit={(e)=>{
+            e.preventDefault();
+            postData(firstName,lastName,checkbox)
+        }}>
             <Form.Field>
                 <label>Firsdt Name</label>
-                <input placeholder='First Name' onChange={(e) => setFirstName(e.target.value)} />
+                <input placeholder='First Name' value={firstName}  onChange={(e) => setFirstName(e.target.value)} />
             </Form.Field>
             <Form.Field>
                 <label>Last Name</label>
-                <input placeholder='Last Name' onChange={(e) => setLastName(e.target.value)} />
+                <input placeholder='Last Name' value={lastName}onChange={(e) => setLastName(e.target.value)} />
             </Form.Field>
             <Form.Field>
-                <Checkbox label='I agree to the Terms and Conditions' onChange={(e) => setCheckbox(!checkbox)} />
+                <Checkbox label='I agree to the Terms and Conditions' value={checkbox} onChange={(e) => setCheckbox(!checkbox)} />
             </Form.Field>
-            <Button type='submit' onClick={postData} >Submit</Button>
+            <Button type='submit' >Submit</Button>
         </Form>
     )
 

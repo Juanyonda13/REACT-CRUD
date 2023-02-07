@@ -6,7 +6,6 @@ import Update from './components/update';
 
 
 function App() {
-
   return (
     <div className="main">
       <h2 className="main-header">React Crud Operations</h2>
